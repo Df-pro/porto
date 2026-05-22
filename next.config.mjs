@@ -12,6 +12,8 @@ const nextConfig = {
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
+  // Ensure iron-session and siwe run in Node.js runtime (not Edge)
+  serverExternalPackages: ['iron-session', 'siwe'],
   webpack: (config, { isServer }) => {
     // Web3 libraries need these externals to avoid build errors
     if (!isServer) {

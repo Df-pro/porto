@@ -233,8 +233,7 @@ export default function Hero() {
           <button
             className="btn-cyber btn-cyber-cyan"
             onClick={() => {
-              const event = new CustomEvent('openWalletModal');
-              window.dispatchEvent(event);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
             [ CONNECT WALLET ]

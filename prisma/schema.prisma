@@ -8,22 +8,26 @@ datasource db {
 }
 
 model Project {
-  id          String   @id @default(cuid())
-  slug        String   @unique
-  name        String
-  category    String[]
-  status      String
-  featured    Boolean  @default(false)
-  onChain     Boolean  @default(false)
-  description String
-  techStack   String[]
-  icon        String   @default("🔧")
-  startDate   String
-  endDate     String?
-  githubUrl   String?
-  liveUrl     String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  name              String
+  category          String[]
+  status            String
+  statusLabel       String   @default("")
+  featured          Boolean  @default(false)
+  onChain           Boolean  @default(false)
+  description       String
+  shortDescription  String   @default("")
+  responsibilities  String[]
+  techStack         String[]
+  icon              String   @default("🔧")
+  startDate         String
+  endDate           String?
+  githubUrl         String?
+  liveUrl           String?
+  onChainTxHash     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model ContactMessage {
@@ -33,5 +37,6 @@ model ContactMessage {
   subject   String
   message   String
   read      Boolean  @default(false)
+  archived  Boolean  @default(false)
   createdAt DateTime @default(now())
 }

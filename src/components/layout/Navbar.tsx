@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAccount } from 'wagmi';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
+const OWNER_WALLET = process.env.NEXT_PUBLIC_OWNER_WALLET?.toLowerCase();
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -15,6 +19,10 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { address, isConnected } = useAccount();
+
+  // Check if connected wallet is the admin/owner
+  const isOwner = isConnected && address && address.toLowerCase() === OWNER_WALLET;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,6 +98,20 @@ export default function Navbar() {
               >
                 [Contact]
               </button>
+
+              {/* Admin link — only visible to owner wallet */}
+              {isOwner && (
+                <Link
+                  href="/admin/dashboard"
+                  className={`px-4 py-2 font-mono text-sm tracking-wide transition-all duration-200 rounded-md ${
+                    pathname.startsWith('/admin')
+                      ? 'text-accent-red bg-accent-red/10'
+                      : 'text-accent-red/60 hover:text-accent-red hover:bg-accent-red/5'
+                  }`}
+                >
+                  [Admin]
+                </Link>
+              )}
             </div>
 
             {/* Right section */}
@@ -105,18 +127,12 @@ export default function Navbar() {
                 🐙
               </a>
 
-              {/* Connect Wallet Button (placeholder — will be replaced by WalletButton) */}
-              <button
-                id="connect-wallet-nav"
-                className="btn-cyber text-xs py-2 px-4"
-                onClick={() => {
-                  // RainbowKit akan handle ini
-                  const event = new CustomEvent('openWalletModal');
-                  window.dispatchEvent(event);
-                }}
-              >
-                ⟐ Connect Wallet
-              </button>
+              {/* RainbowKit Connect Wallet */}
+              <ConnectButton
+                chainStatus="icon"
+                accountStatus="avatar"
+                showBalance={false}
+              />
             </div>
 
             {/* Mobile Hamburger */}
@@ -179,10 +195,22 @@ export default function Navbar() {
                 {'>'} Contact
               </button>
 
+              {/* Admin link in mobile — only for owner */}
+              {isOwner && (
+                <Link
+                  href="/admin/dashboard"
+                  className="px-4 py-3 font-mono text-sm tracking-wide text-accent-red/60 hover:text-accent-red text-left rounded-md transition-all"
+                >
+                  {'>'} Admin
+                </Link>
+              )}
+
               <div className="border-t border-accent-green/10 mt-4 pt-4">
-                <button className="btn-cyber text-xs py-2 px-4 w-full">
-                  ⟐ Connect Wallet
-                </button>
+                <ConnectButton
+                  chainStatus="icon"
+                  accountStatus="avatar"
+                  showBalance={false}
+                />
               </div>
             </div>
           </motion.div>

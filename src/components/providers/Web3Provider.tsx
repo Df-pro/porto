@@ -7,8 +7,6 @@ import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
 import { config } from '@/lib/wagmi';
 import '@rainbow-me/rainbowkit/styles.css';
 
-const queryClient = new QueryClient();
-
 // Custom RainbowKit theme matching cyberpunk aesthetic
 const customTheme = darkTheme({
   accentColor: '#00ff88',
@@ -20,6 +18,9 @@ const customTheme = darkTheme({
 
 export default function Web3Provider({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false);
+
+  // Create QueryClient inside component to avoid shared state across SSR requests
+  const [queryClient] = useState(() => new QueryClient());
 
   useEffect(() => {
     setMounted(true);

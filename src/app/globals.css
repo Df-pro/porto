@@ -102,7 +102,7 @@ body {
     rgba(0, 255, 136, 0.015) 4px
   );
   pointer-events: none;
-  z-index: 9998;
+  z-index: 50; /* Must be below RainbowKit modal (~9999) and below navbar (100) */
 }
 
 /* ========================================

@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter, IBM_Plex_Mono, Space_Mono } from 'next/font/google';
 import './globals.css';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 import Web3Provider from '@/components/providers/Web3Provider';
-import MatrixRain from '@/components/ui/MatrixRain';
+import LayoutShell from '@/components/layout/LayoutShell';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -69,11 +67,7 @@ export default function RootLayout({
         className={`${inter.variable} ${ibmPlexMono.variable} ${spaceMono.variable} antialiased scanline-overlay`}
       >
         <Web3Provider>
-          {/* Matrix Rain Background — client component to avoid hydration mismatch */}
-          <MatrixRain />
-          <Navbar />
-          <main className="relative z-[1]">{children}</main>
-          <Footer />
+          <LayoutShell>{children}</LayoutShell>
         </Web3Provider>
       </body>
     </html>

@@ -52,7 +52,7 @@ export default function CustomCursor() {
       {/* Crosshair ring */}
       <div
         ref={cursorRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 pointer-events-none z-[200] mix-blend-difference"
         style={{
           opacity: isVisible ? 1 : 0,
           transition: 'opacity 0.15s ease',
@@ -69,7 +69,7 @@ export default function CustomCursor() {
       {/* Center dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9999]"
+        className="fixed top-0 left-0 pointer-events-none z-[200]"
         style={{
           opacity: isVisible ? 1 : 0,
           transition: 'opacity 0.15s ease',
