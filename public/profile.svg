@@ -1,0 +1,17 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="400" fill="#0d1117"/>
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.3"/>
+      <stop offset="50%" style="stop-color:#00d4ff;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#bd93f9;stop-opacity:0.3"/>
+    </linearGradient>
+  </defs>
+  <circle cx="200" cy="160" r="60" fill="url(#grad)" stroke="#00ff88" stroke-width="2"/>
+  <circle cx="200" cy="160" r="50" fill="#161b22"/>
+  <circle cx="200" cy="145" r="20" fill="#7d8590"/>
+  <path d="M160 185 Q200 220 240 185 Q250 210 250 230 Q200 260 150 230 Q150 210 160 185" fill="#7d8590"/>
+  <text x="200" y="310" text-anchor="middle" font-family="monospace" font-size="14" fill="#00ff88">DWI FERDIANTO</text>
+  <text x="200" y="335" text-anchor="middle" font-family="monospace" font-size="10" fill="#7d8590">AI Engineer</text>
+  <polygon points="200,40 280,85 280,175 200,220 120,175 120,85" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.3"/>
+</svg>

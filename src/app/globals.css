@@ -1,0 +1,516 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   CYBERPUNK DARK TERMINAL — DESIGN SYSTEM
+   Portfolio: Dwi Ferdianto
+   ======================================== */
+
+/* Fonts loaded via next/font (Inter, IBM Plex Mono, Space Mono)
+   and via CDN link in layout.tsx (Orbitron, Share Tech Mono) */
+
+:root {
+  /* Background Colors */
+  --bg-primary: #080c10;
+  --bg-secondary: #0d1117;
+  --bg-tertiary: #161b22;
+
+  /* Accent Colors */
+  --accent-green: #00ff88;
+  --accent-cyan: #00d4ff;
+  --accent-purple: #bd93f9;
+  --accent-orange: #ff8c00;
+  --accent-red: #ff4757;
+
+  /* Text Colors */
+  --text-primary: #e6edf3;
+  --text-secondary: #7d8590;
+  --text-muted: #4a5568;
+
+  /* Effects */
+  --border-glow: rgba(0, 255, 136, 0.3);
+  --border-glow-strong: rgba(0, 255, 136, 0.6);
+
+  /* Neon Shadows */
+  --neon-green: 0 0 5px rgba(0, 255, 136, 0.4), 0 0 20px rgba(0, 255, 136, 0.15);
+  --neon-cyan: 0 0 5px rgba(0, 212, 255, 0.4), 0 0 20px rgba(0, 212, 255, 0.15);
+  --neon-purple: 0 0 5px rgba(189, 147, 249, 0.4), 0 0 20px rgba(189, 147, 249, 0.15);
+  --neon-orange: 0 0 5px rgba(255, 140, 0, 0.4), 0 0 20px rgba(255, 140, 0, 0.15);
+}
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'IBM Plex Mono', 'Space Mono', monospace;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+::selection {
+  background: rgba(0, 255, 136, 0.3);
+  color: var(--accent-green);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-green);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
+}
+
+/* ========================================
+   SCANLINE OVERLAY
+   ======================================== */
+
+.scanline-overlay::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 136, 0.015) 2px,
+    rgba(0, 255, 136, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* ========================================
+   MATRIX RAIN EFFECT (CSS only)
+   ======================================== */
+
+.matrix-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0.03;
+}
+
+.matrix-rain span {
+  position: absolute;
+  top: -100px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 14px;
+  color: var(--accent-green);
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  animation: matrix-fall linear infinite;
+  text-shadow: 0 0 8px var(--accent-green);
+}
+
+@keyframes matrix-fall {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* ========================================
+   GLITCH TEXT EFFECT
+   ======================================== */
+
+.glitch-container {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Glitch only active when .glitch-active class is present */
+.glitch-text.glitch-active::before,
+.glitch-text.glitch-active::after {
+  opacity: 1;
+}
+
+.glitch-text::before {
+  color: var(--accent-cyan);
+  animation: glitch-1 2s infinite linear alternate-reverse;
+  z-index: -1;
+}
+
+.glitch-text::after {
+  color: var(--accent-red);
+  animation: glitch-2 3s infinite linear alternate-reverse;
+  z-index: -2;
+}
+
+@keyframes glitch-1 {
+  0% { clip-path: inset(40% 0 61% 0); transform: translate(-2px, 2px); }
+  20% { clip-path: inset(92% 0 1% 0); transform: translate(1px, -1px); }
+  40% { clip-path: inset(43% 0 1% 0); transform: translate(-1px, 3px); }
+  60% { clip-path: inset(25% 0 58% 0); transform: translate(3px, 1px); }
+  80% { clip-path: inset(54% 0 7% 0); transform: translate(-3px, -2px); }
+  100% { clip-path: inset(58% 0 43% 0); transform: translate(2px, -3px); }
+}
+
+@keyframes glitch-2 {
+  0% { clip-path: inset(65% 0 13% 0); transform: translate(3px, -1px); }
+  20% { clip-path: inset(10% 0 85% 0); transform: translate(-2px, 2px); }
+  40% { clip-path: inset(70% 0 2% 0); transform: translate(2px, -3px); }
+  60% { clip-path: inset(30% 0 50% 0); transform: translate(-3px, 1px); }
+  80% { clip-path: inset(80% 0 5% 0); transform: translate(1px, 3px); }
+  100% { clip-path: inset(5% 0 90% 0); transform: translate(-1px, -2px); }
+}
+
+/* ========================================
+   NEON GLOW UTILITIES
+   ======================================== */
+
+.neon-border-green {
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  box-shadow: var(--neon-green);
+}
+
+.neon-border-cyan {
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  box-shadow: var(--neon-cyan);
+}
+
+.neon-border-purple {
+  border: 1px solid rgba(189, 147, 249, 0.3);
+  box-shadow: var(--neon-purple);
+}
+
+.neon-border-orange {
+  border: 1px solid rgba(255, 140, 0, 0.3);
+  box-shadow: var(--neon-orange);
+}
+
+.hover-neon-green:hover {
+  border-color: rgba(0, 255, 136, 0.6);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.5), 0 0 30px rgba(0, 255, 136, 0.2);
+  transform: translateY(-2px);
+}
+
+.hover-neon-cyan:hover {
+  border-color: rgba(0, 212, 255, 0.6);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 30px rgba(0, 212, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   TERMINAL CARD
+   ======================================== */
+
+.terminal-card {
+  background: var(--bg-secondary);
+  border: 1px solid rgba(0, 255, 136, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.terminal-card:hover {
+  border-color: rgba(0, 255, 136, 0.4);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.15), 0 8px 32px rgba(0, 0, 0, 0.4);
+  transform: translateY(-4px);
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.terminal-dot.red { background: #ff5f57; }
+.terminal-dot.yellow { background: #ffbd2e; }
+.terminal-dot.green { background: #28c840; }
+
+.terminal-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-left: 8px;
+}
+
+.terminal-body {
+  padding: 20px;
+}
+
+/* ========================================
+   CUSTOM CURSOR
+   ======================================== */
+
+@media (pointer: fine) {
+  .custom-cursor-area {
+    cursor: none;
+  }
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+.btn-cyber {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 1px solid var(--accent-green);
+  background: transparent;
+  color: var(--accent-green);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-cyber::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.15), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-cyber:hover {
+  background: rgba(0, 255, 136, 0.1);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3), 0 0 30px rgba(0, 255, 136, 0.1);
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+}
+
+.btn-cyber:hover::before {
+  left: 100%;
+}
+
+.btn-cyber-filled {
+  background: rgba(0, 255, 136, 0.1);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.btn-cyber-cyan {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.btn-cyber-cyan:hover {
+  background: rgba(0, 212, 255, 0.1);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.3), 0 0 30px rgba(0, 212, 255, 0.1);
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+}
+
+/* ========================================
+   SECTION STYLES
+   ======================================== */
+
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 24px;
+}
+
+.section-header {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 14px;
+  color: var(--accent-green);
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+
+.section-title {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+/* ========================================
+   FORM STYLES
+   ======================================== */
+
+.input-cyber {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--bg-tertiary);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input-cyber:focus {
+  border-color: var(--accent-green);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+}
+
+.input-cyber::placeholder {
+  color: var(--text-muted);
+}
+
+/* ========================================
+   HEXAGON PROFILE FRAME
+   ======================================== */
+
+.hexagon-frame {
+  width: 280px;
+  height: 280px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  position: relative;
+}
+
+.hexagon-frame::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan), var(--accent-purple));
+  z-index: -1;
+  animation: rotate-gradient 4s linear infinite;
+}
+
+@keyframes rotate-gradient {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+/* ========================================
+   PROGRESS BAR TERMINAL STYLE
+   ======================================== */
+
+.progress-terminal {
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-terminal-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.progress-terminal-fill::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -2px;
+  bottom: -2px;
+  width: 4px;
+  background: inherit;
+  box-shadow: 0 0 8px currentColor;
+  border-radius: 2px;
+}
+
+/* ========================================
+   RESPONSIVE UTILITIES
+   ======================================== */
+
+@media (max-width: 768px) {
+  .section-container {
+    padding: 60px 16px;
+  }
+
+  .hexagon-frame {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* ========================================
+   ANIMATION UTILITIES
+   ======================================== */
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.stagger-children > *:nth-child(1) { transition-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { transition-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { transition-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { transition-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { transition-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { transition-delay: 0.6s; }
